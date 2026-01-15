@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}All Posts{% endblock %}
+
+{% block content %}
+
+<h2>All Blog Posts</h2>
+
+{% if user.is_authenticated %}
+    <p>
+        <a href="{% url 'post_create' %}">➕ Create New Post</a>
+    </p>
+{% else %}
+    <p>
+        <a href="/admin/login/">Login to create posts</a>
+    </p>
+{% endif %}
+
+<hr>
+
+{% for post in posts %}
+    <div>
+        <h3>
+            <a href="{% url 'post_detail' post.id %}">
+                {{ post.title }}
+            </a>
+        </h3>
+
+        <p>
+            {{ post.content|truncatewords:30 }}
+        </p>
+
+        <p>
+            <small>
+                By {{ post.author.username }} |
+                {{ post.created_at }}
+            </small>
+        </p>
+    </div>
+    <hr>
+{% empty %}
+    <p>No posts available.</p>
+{% endfor %}
+
+{% endblock %}

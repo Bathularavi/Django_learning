@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>My Dashboard</h2>
+
+<a href="{% url 'post_create' %}">Create Post</a>
+<hr>
+
+{% for post in posts %}
+    <p>
+        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+        | <a href="{% url 'post_edit' post.id %}">Edit</a>
+    </p>
+{% empty %}
+    <p>No posts yet.</p>
+{% endfor %}
+{% endblock %}
